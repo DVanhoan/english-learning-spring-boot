@@ -1,0 +1,30 @@
+services:
+  e-learning-db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ELearning
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  e-learning-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: e-learning-app
+    depends_on:
+      - e-learning-db
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=e-learning-db
+      - SPRING_PROFILES_ACTIVE=prod
+
+volumes:
+  postgres_data:

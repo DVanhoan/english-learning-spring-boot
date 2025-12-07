@@ -36,5 +36,5 @@ build/
 .env
 
 # Ignore application yaml files
-*.yml
-*.yaml
+#*.yml
+#*.yaml
