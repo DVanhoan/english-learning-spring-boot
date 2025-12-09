@@ -50,6 +50,8 @@ cloudinary:
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   refresh-key: ${JWT_REFRESH_KEY}
+  reset-key: ${JWT_RESET_KEY}
+  confirm-key: ${JWT_CONFIRM_KEY}
   expiry-hour: 1
   expiry-day: 3
   expiry-minute: 30
