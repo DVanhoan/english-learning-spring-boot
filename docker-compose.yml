@@ -1,15 +1,17 @@
 services:
   e-learning-db:
-    image: postgres:15
-    container_name: postgres-db
+    image: mysql:8.0
+    container_name: mysql-db
     environment:
-      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
-      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      POSTGRES_DB: ELearning
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      MYSQL_USER: ${SPRING_DATASOURCE_USERNAME}
+      MYSQL_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      MYSQL_DATABASE: ELearning
     ports:
-      - "5433:5432"
+      - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
 
   e-learning-app:
     build:
@@ -27,4 +29,4 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
 
 volumes:
-  postgres_data:
+  mysql_data:
