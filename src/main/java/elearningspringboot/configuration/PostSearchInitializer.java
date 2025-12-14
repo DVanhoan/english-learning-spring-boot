@@ -7,7 +7,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-//@Component
 @RequiredArgsConstructor
 @Slf4j
 @Order(100)

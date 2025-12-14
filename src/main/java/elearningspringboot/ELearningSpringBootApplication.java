@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableFeignClients
 @EnableAsync
 public class ELearningSpringBootApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ELearningSpringBootApplication.class, args);
     }
