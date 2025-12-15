@@ -31,7 +31,7 @@ public class SpeakingServiceImpl implements SpeakingService {
     private final SpeakingRoomRepository roomRepository;
     private final UserRepository userRepository;
     private final StorageService storageService;
-    private final SpeakingMapper mapper; // Inject Mapper
+    private final SpeakingMapper mapper;
 
     // ============================================================
     // TOPIC MANAGEMENT

@@ -62,10 +62,10 @@ oauth2:
     redirect-uri: http://localhost:3000
 
 vnpay:
-  tmnCode: "TYRFL8H8"
+  tmnCode: "UOVPXX0O"
   vnp_Url: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
-  hashSecret: "ZRT54MAIM3DX88FG3STH5AWMW32VMCKV"
-  apiUrl: "http://localhost:8080/e-learning/api/v1/payment/vnpay-ipn"
+  hashSecret: "BSG1IW61E42B7C54VG56OMBZ13Y25WYW"
+  apiUrl: "https://english-learning-spring-boot.onrender.com/e-learning/api/v1/payment/vnpay-ipn"
   returnUrl: "http://localhost:3000/payment-result"
 
 gemini:

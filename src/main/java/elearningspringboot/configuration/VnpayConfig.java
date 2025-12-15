@@ -1,6 +1,8 @@
 package elearningspringboot.configuration;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
@@ -13,10 +15,14 @@ import java.util.*;
 public class VnpayConfig {
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
-    public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:3000/payment-result";
-    public static String vnp_TmnCode = "K8BF2WJD";
-    public static String secretKey = "8Y0T2I5HDX9SZWGPYPCZ6T7WZEZ1E02L";
+    @Value("${vnp.vnp_Url}")
+    public static String vnp_PayUrl;
+    @Value("${vnp.returnUrl}")
+    public static String vnp_ReturnUrl;
+    @Value("${vnp.tmnCode}")
+    public static String vnp_TmnCode;
+    @Value("${vnp.secretKey}")
+    public static String secretKey;
 
     public static String md5(String message) {
         String digest = null;
