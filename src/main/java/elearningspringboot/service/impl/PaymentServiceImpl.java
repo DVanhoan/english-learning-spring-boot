@@ -42,6 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final TransactionRepository transactionRepository;
     private final TeacherPayoutRepository teacherPayoutRepository;
     private final CartItemRepository cartItemRepository;
+    private final VnpayConfig vnpayConfig;
 
     @Override
     @Transactional
@@ -68,7 +69,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         long amountVnpay = (long) (totalAmount * 100);
-        String vnp_TxnRef = VnpayConfig.getRandomNumber(8);
+        String vnp_TxnRef = vnpayConfig.getRandomNumber(8);
 
         // 3. Tạo 1 Giao dịch (Transaction) TỔNG
         Transaction transaction = Transaction.builder()
@@ -94,17 +95,17 @@ public class PaymentServiceImpl implements PaymentService {
 
         // 5. Tạo URL VNPAY (với tổng số tiền)
         Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", VnpayConfig.vnp_Version);
-        vnp_Params.put("vnp_Command", VnpayConfig.vnp_Command);
-        vnp_Params.put("vnp_TmnCode", VnpayConfig.vnp_TmnCode);
+        vnp_Params.put("vnp_Version", vnpayConfig.vnp_Version);
+        vnp_Params.put("vnp_Command", vnpayConfig.vnp_Command);
+        vnp_Params.put("vnp_TmnCode", vnpayConfig.vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amountVnpay));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan cho " + courses.size() + " khoa hoc");
         vnp_Params.put("vnp_OrderType", "other");
         vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", VnpayConfig.vnp_ReturnUrl);
-        vnp_Params.put("vnp_IpAddr", VnpayConfig.getIpAddress(httpServletRequest));
+        vnp_Params.put("vnp_ReturnUrl", vnpayConfig.vnp_ReturnUrl);
+        vnp_Params.put("vnp_IpAddr", vnpayConfig.getIpAddress(httpServletRequest));
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -127,9 +128,9 @@ public class PaymentServiceImpl implements PaymentService {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = VnpayConfig.hmacSHA512(VnpayConfig.secretKey, hashData.toString());
+        String vnp_SecureHash = vnpayConfig.hmacSHA512(vnpayConfig.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = VnpayConfig.vnp_PayUrl + "?" + queryUrl;
+        String paymentUrl = vnpayConfig.vnp_PayUrl + "?" + queryUrl;
 
         return new CreatePaymentResponse(paymentUrl);
     }

@@ -15,14 +15,14 @@ import java.util.*;
 public class VnpayConfig {
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
-    @Value("${vnp.vnp_Url}")
-    public static String vnp_PayUrl;
-    @Value("${vnp.returnUrl}")
-    public static String vnp_ReturnUrl;
-    @Value("${vnp.tmnCode}")
-    public static String vnp_TmnCode;
-    @Value("${vnp.secretKey}")
-    public static String secretKey;
+    @Value("${vnpay.vnp_Url}")
+    public String vnp_PayUrl;
+    @Value("${vnpay.returnUrl}")
+    public String vnp_ReturnUrl;
+    @Value("${vnpay.tmnCode}")
+    public String vnp_TmnCode;
+    @Value("${vnpay.secretKey}")
+    public String secretKey;
 
     public static String md5(String message) {
         String digest = null;
@@ -61,7 +61,7 @@ public class VnpayConfig {
     }
 
     // Util for VNPAY
-    public static String hashAllFields(Map fields) {
+    public String hashAllFields(Map fields) {
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
         StringBuilder sb = new StringBuilder();
