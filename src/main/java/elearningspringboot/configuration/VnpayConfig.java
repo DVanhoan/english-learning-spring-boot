@@ -1,7 +1,9 @@
 package elearningspringboot.configuration;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -12,17 +14,25 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+@Configuration
+@Getter
 public class VnpayConfig {
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
     @Value("${vnpay.vnp_Url}")
-    public String vnp_PayUrl;
+    private String vnp_PayUrl;
+
     @Value("${vnpay.returnUrl}")
-    public String vnp_ReturnUrl;
+    private String vnp_ReturnUrl;
+
     @Value("${vnpay.tmnCode}")
-    public String vnp_TmnCode;
-    @Value("${vnpay.secretKey}")
-    public String secretKey;
+    private String vnp_TmnCode;
+
+    @Value("${vnpay.hashSecret}")
+    private String secretKey;
+
+    @Value("${vnpay.apiUrl}")
+    private String vnp_ApiUrl;
 
     public static String md5(String message) {
         String digest = null;
@@ -60,8 +70,7 @@ public class VnpayConfig {
         return digest;
     }
 
-    // Util for VNPAY
-    public String hashAllFields(Map fields) {
+    public static String hashAllFields(Map fields, String secretKey) {
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
         StringBuilder sb = new StringBuilder();
@@ -83,7 +92,6 @@ public class VnpayConfig {
 
     public static String hmacSHA512(final String key, final String data) {
         try {
-
             if (key == null || data == null) {
                 throw new NullPointerException();
             }
@@ -98,7 +106,6 @@ public class VnpayConfig {
                 sb.append(String.format("%02x", b & 0xff));
             }
             return sb.toString();
-
         } catch (Exception ex) {
             return "";
         }
