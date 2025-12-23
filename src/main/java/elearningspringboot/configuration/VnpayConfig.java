@@ -31,9 +31,6 @@ public class VnpayConfig {
     @Value("${vnpay.hashSecret}")
     private String secretKey;
 
-    @Value("${vnpay.apiUrl}")
-    private String vnp_ApiUrl;
-
     public static String md5(String message) {
         String digest = null;
         try {
